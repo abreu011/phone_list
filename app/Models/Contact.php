@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    // Criar novo contato
+    // Create new contact
     protected $fillable = [
         'name', 
         'lastName', 
