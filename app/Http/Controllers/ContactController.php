@@ -6,6 +6,7 @@ use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use PhpParser\Node\Expr\Cast\Int_;
 
 class ContactController extends Controller
 {
@@ -23,14 +24,14 @@ class ContactController extends Controller
         return new ContactResource($contact);
     }
 
-    public function show(string $id) // Show contact by id
+    public function show(int $id) // Show contact by id
     {
         $contact = Contact::findOrFail($id);
 
         return new ContactResource($contact);
     }
 
-    public function update(Request $request, string $id) // Update contact by id
+    public function update(Request $request, int $id) // Update contact by id
     {
         $contact = Contact::findOrFail($id);
         $data = $request->all();
@@ -39,7 +40,7 @@ class ContactController extends Controller
         return new ContactResource($contact);        
     }
 
-    public function destroy(string $id) // Delete contact by id
+    public function destroy(int $id) // Delete contact by id
     {
         $contact = Contact::findOrFail($id);
         $contact->delete();
