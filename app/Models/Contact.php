@@ -9,8 +9,8 @@ class Contact extends Model
     // Create new contact
     protected $fillable = [
         'name', 
-        'lastName', 
-        'phoneNumber'
+        'last_name', 
+        'phone_number'
     ];
     
 }
