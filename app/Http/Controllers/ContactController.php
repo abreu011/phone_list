@@ -6,21 +6,31 @@ use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use PhpParser\Node\Expr\Cast\Int_;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
 
 class ContactController extends Controller
 {
-    public function index() // Return all contacts
+    public function index() // Show all contacts
     {
-        $contacts = Contact::all();
+        // $contacts = Contact::all();
+        $contacts = Contact::simplePaginate(4);    // Show contacts with paginate (3 contacts)   
+                
         return ContactResource::collection($contacts);
     }
 
     public function store(Request $request) // Create new contact 
     {
-        $data = $request->all();
-        $contact = Contact::create($data);
-
+        $validated = $request->validate([
+            'name' => 'required|max:100',
+            'last_name' => 'required|max:150',
+            'phone_number' => 'required|unique:contacts|min:10|max:20'
+        ]);
+            
+        $contact = Contact::create($validated);
+        
         return new ContactResource($contact);
     }
 
@@ -34,8 +44,17 @@ class ContactController extends Controller
     public function update(Request $request, int $id) // Update contact by id
     {
         $contact = Contact::findOrFail($id);
-        $data = $request->all();
-        $contact->update($data);
+        $validated = $request->all();
+        Validator::make($validated, [
+            'name' => 'required|max:100',
+            'last_name' => 'required|max:150',
+            'phone_number' => [
+            'required',
+            Rule::unique('contacts')->ignore($contact->id),
+            ],
+        ]);
+
+        $contact->update($validated);
 
         return new ContactResource($contact);        
     }
