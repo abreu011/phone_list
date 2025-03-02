@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Contact extends Model
 {
@@ -13,4 +14,11 @@ class Contact extends Model
         'phone_number'
     ];
     
+    public function addresses(): HasMany
+
+    {
+
+        return $this->hasMany(Address::class);
+
+    }
 }

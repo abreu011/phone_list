@@ -42,7 +42,7 @@ class ContactController extends Controller
 
     public function show(int $id) // Show contact by id
     {
-        $contact = Contact::findOrFail($id);
+        $contact = Contact::with('addresses')->findOrFail($id);
 
         return new ContactResource($contact);
     }
@@ -59,7 +59,7 @@ class ContactController extends Controller
 
     public function destroy(int $id) // Delete contact by id
     {
-        $contact = Contact::findOrFail($id);
+        $contact = Contact::with('addresses')->findOrFail($id);
         $contact->delete();
 
         return response()->json([], Response::HTTP_NO_CONTENT); // Return status 204 (success)     
