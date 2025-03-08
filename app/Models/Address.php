@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Address extends Model
 {
     protected $fillable = [
+        'contact_id',
         'city',
         'state',
         'zip_code',
@@ -19,8 +20,6 @@ class Address extends Model
 
     public function contact(): BelongsTo
     {
-
         return $this->belongsTo(Contact::class);
-
     }
 }

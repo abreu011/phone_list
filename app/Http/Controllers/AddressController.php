@@ -11,17 +11,8 @@ use Illuminate\Http\Response;
 
 class AddressController extends Controller
 {
-    public function index()
-    {
-        $address = Address::all();
-        
-        return AddressResource::collection($address);
-    }
-
     public function store(StoreAddressRequest $request, Contact $contact)
     {
-        //$contact = Contact::findOrFail($contact);
-        //$validated = $request->validated();
         $contact_address = $contact->addresses()->create($request->validated());
     
         return new AddressResource($contact_address);
