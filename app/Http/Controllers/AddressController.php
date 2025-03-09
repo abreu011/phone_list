@@ -8,9 +8,20 @@ use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use App\Models\Contact;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AddressController extends Controller
 {
+    public function search(Request $request)
+    {
+        $zip_code = $request->input('cep');        
+        $response = Http::get("https://viacep.com.br/ws/{$zip_code}/json/");
+
+        return response()->json($response->json());
+
+    }
+
     public function store(StoreAddressRequest $request, Contact $contact)
     {
         $contact_address = $contact->addresses()->create($request->validated());

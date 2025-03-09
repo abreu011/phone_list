@@ -18,5 +18,6 @@ Route::get('/contacts/{contact}/addresses', [AddressController::class, 'show']);
 Route::post('/contacts/{contact}/addresses', [AddressController::class, 'store']); 
 
 Route::delete('addresses/{id}', [AddressController::class, 'destroy']); 
-Route::put('addresses/{id}', [AddressController::class, 'update']); 
-Route::get('/addresses', [AddressController::class, 'index']); 
+Route::put('addresses/{id}', [AddressController::class, 'update']);
+
+Route::get('/cep', [AddressController::class, 'search']);
